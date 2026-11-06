@@ -1,0 +1,3 @@
+﻿[2026-11-06 11:53:47] Se generaron archivos iniciales de prueba (.csv, .json, .log) en EventosEntrada.
+[2026-11-06 11:53:47] Iniciando procesamiento automático. Motivo: Ejecución desatendida por argumento CLI (--auto)
+[2026-11-06 11:53:47] Reporte generado exitosamente | Eventos: 14 (Críticos: 5, Altos: 4) | Riesgo: 100/100 | HTML: Reporte_Seguridad_20261106_115347.html

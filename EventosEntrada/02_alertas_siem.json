@@ -1,0 +1,50 @@
+﻿[
+  {
+    "Id": "SIEM-201",
+    "FechaHora": "2026-11-06T07:03:47.7093497-04:00",
+    "TipoEvento": "Malware Detectado",
+    "Severidad": "Critica",
+    "OrigenIp": "10.0.20.44",
+    "Usuario": "maria.lopez",
+    "Servidor": "WKS-FINANZAS-04",
+    "Estado": "En Investigaci\u00F3n",
+    "Descripcion": "Ejecuci\u00F3n sospechosa de script PowerShell ofuscado (TrojanDownloader.Agent)",
+    "ArchivoOrigen": ""
+  },
+  {
+    "Id": "SIEM-202",
+    "FechaHora": "2026-11-06T07:38:47.7093497-04:00",
+    "TipoEvento": "Escalaci\u00F3n de Privilegios",
+    "Severidad": "Alta",
+    "OrigenIp": "10.0.20.44",
+    "Usuario": "maria.lopez",
+    "Servidor": "SRV-ARCHIVOS-01",
+    "Estado": "Alerta Activa",
+    "Descripcion": "Solicitud inusual de permisos de Administrador de Dominio fuera de horario habitual",
+    "ArchivoOrigen": ""
+  },
+  {
+    "Id": "SIEM-203",
+    "FechaHora": "2026-11-06T08:08:47.7093497-04:00",
+    "TipoEvento": "Exfiltraci\u00F3n de Datos Sospechosa",
+    "Severidad": "Critica",
+    "OrigenIp": "10.0.20.44",
+    "Usuario": "maria.lopez",
+    "Servidor": "SRV-DB-CLIENTES",
+    "Estado": "Alerta Activa",
+    "Descripcion": "Transferencia saliente inusual de 4.8 GB hacia almacenamiento externo no autorizado",
+    "ArchivoOrigen": ""
+  },
+  {
+    "Id": "SIEM-204",
+    "FechaHora": "2026-11-06T08:33:47.7093497-04:00",
+    "TipoEvento": "Certificado SSL por Expirar",
+    "Severidad": "Baja",
+    "OrigenIp": "10.0.5.10",
+    "Usuario": "sistema",
+    "Servidor": "SRV-WEB-PORTAL",
+    "Estado": "En Investigaci\u00F3n",
+    "Descripcion": "El certificado TLS del dominio principal expira en 14 d\u00EDas",
+    "ArchivoOrigen": ""
+  }
+]

@@ -1,0 +1,532 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reporte de Seguridad SOC - 2026-11-06 11:53:47</title>
+  <style>
+:root {
+  --bg: #0b1120;
+  --panel: #151f32;
+  --panel-alt: #1e293b;
+  --border: #334155;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --critica: #ef4444;
+  --alta: #f97316;
+  --media: #eab308;
+  --baja: #22c55e;
+  --accent: #38bdf8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding: 28px;
+}
+.container { max-width: 1360px; margin: 0 auto; }
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #151f32 0%, #0f172a 100%);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+  border-radius: 12px;
+  padding: 22px 26px;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+header h1 { font-size: 1.55rem; letter-spacing: 0.3px; }
+header p { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
+.risk-box {
+  text-align: right;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid var(--border);
+}
+.risk-score { font-size: 1.8rem; font-weight: 800; }
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card .label { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.6px; }
+.kpi-card .value { font-size: 2rem; font-weight: 700; margin-top: 6px; }
+.kpi-card.critica { border-top: 4px solid var(--critica); }
+.kpi-card.alta { border-top: 4px solid var(--alta); }
+.kpi-card.media { border-top: 4px solid var(--media); }
+.kpi-card.baja { border-top: 4px solid var(--baja); }
+.kpi-card.total { border-top: 4px solid var(--accent); }
+.section {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 24px;
+}
+.section h2 {
+  font-size: 1.15rem;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  color: #e2e8f0;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.alert-item {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-left: 4px solid var(--critica);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.alert-item.alta {
+  background: rgba(249, 115, 22, 0.08);
+  border-color: rgba(249, 115, 22, 0.35);
+  border-left-color: var(--alta);
+}
+.alert-title { font-weight: 700; font-size: 0.98rem; margin-bottom: 4px; }
+.alert-detail { color: #cbd5e1; font-size: 0.9rem; margin-bottom: 6px; }
+.alert-rec { color: var(--accent); font-size: 0.86rem; font-weight: 500; }
+.bar-row { margin-bottom: 12px; }
+.bar-header { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 4px; }
+.bar-track { background: var(--panel-alt); height: 10px; border-radius: 6px; overflow: hidden; }
+.bar-fill { background: linear-gradient(90deg, #0ea5e9, #38bdf8); height: 100%; border-radius: 6px; }
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+.search-input {
+  flex: 1;
+  min-width: 260px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+}
+.filter-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn {
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.15s;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: var(--accent);
+  color: #0f172a;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th, td {
+  padding: 11px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--panel-alt);
+  color: #cbd5e1;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+tr:hover td { background: rgba(255, 255, 255, 0.03); }
+.badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.badge.Critica { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; }
+.badge.Alta { background: rgba(249, 115, 22, 0.2); color: #fdba74; border: 1px solid #f97316; }
+.badge.Media { background: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid #eab308; }
+.badge.Baja { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid #22c55e; }
+.mono { font-family: 'Consolas', 'Courier New', monospace; color: #bae6fd; }
+footer { text-align: center; color: var(--muted); font-size: 0.82rem; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>🛡️ Reporte Automatizado de Incidentes y Eventos de Seguridad</h1>
+        <p>Generado automáticamente el <strong>06/11/2026 11:53:47</strong> | Archivos analizados: <strong>3</strong> | Rango: <strong>06/11/2026 05:58</strong> a <strong>06/11/2026 10:18</strong></p>
+      </div>
+      <div class="risk-box">
+        <div class="risk-score" style="color: #ef4444;">100/100</div>
+        <div style="font-size: 0.82rem; color: #ef4444; font-weight: 600;">CR&#205;TICO - Acci&#243;n Inmediata Requerida</div>
+      </div>
+    </header>
+    <div class="kpi-grid">
+      <div class="kpi-card total"><div class="label">Total Eventos</div><div class="value">14</div></div>
+      <div class="kpi-card critica"><div class="label">Severidad Crítica</div><div class="value" style="color:var(--critica)">5</div></div>
+      <div class="kpi-card alta"><div class="label">Severidad Alta</div><div class="value" style="color:var(--alta)">4</div></div>
+      <div class="kpi-card media"><div class="label">Severidad Media</div><div class="value" style="color:var(--media)">2</div></div>
+      <div class="kpi-card baja"><div class="label">Severidad Baja</div><div class="value" style="color:var(--baja)">3</div></div>
+    </div>
+    <div class="section">
+      <h2>🚨 Hallazgos de Correlación y Recomendaciones Automáticas</h2>
+      <div class="alert-item critica">
+        <div class="alert-title">[CRITICA] Actividad Hostil Repetitiva desde IP 185.220.101.45</div>
+        <div class="alert-detail">Se registraron 4 eventos desde la IP 185.220.101.45 (Tipos: Escaneo de Puertos, Login Fallido). Posible ataque de fuerza bruta o reconocimiento activo.</div>
+        <div class="alert-rec">💡 Recomendación: Bloquear permanentemente la IP 185.220.101.45 en el Firewall perimetral y auditar accesos previos desde este origen.</div>
+      </div>
+      <div class="alert-item critica">
+        <div class="alert-title">[CRITICA] Actividad Hostil Repetitiva desde IP 10.0.20.44</div>
+        <div class="alert-detail">Se registraron 3 eventos desde la IP 10.0.20.44 (Tipos: Malware Detectado, Escalaci&#243;n de Privilegios, Exfiltraci&#243;n de Datos Sospechosa). Posible ataque de fuerza bruta o reconocimiento activo.</div>
+        <div class="alert-rec">💡 Recomendación: Bloquear permanentemente la IP 10.0.20.44 en el Firewall perimetral y auditar accesos previos desde este origen.</div>
+      </div>
+      <div class="alert-item critica">
+        <div class="alert-title">[CRITICA] Posible Compromiso de Credenciales: Usuario &#39;root&#39;</div>
+        <div class="alert-detail">La cuenta &#39;root&#39; presenta 2 incidentes de severidad Alta/Cr&#237;tica afectando a: SRV-LINUX-PROD.</div>
+        <div class="alert-rec">💡 Recomendación: Forzar restablecimiento inmediato de contrase&#241;a para &#39;root&#39;, revocar sesiones activas y verificar MFA.</div>
+      </div>
+      <div class="alert-item critica">
+        <div class="alert-title">[CRITICA] Posible Compromiso de Credenciales: Usuario &#39;web_guest&#39;</div>
+        <div class="alert-detail">La cuenta &#39;web_guest&#39; presenta 2 incidentes de severidad Alta/Cr&#237;tica afectando a: SRV-WEB-PORTAL.</div>
+        <div class="alert-rec">💡 Recomendación: Forzar restablecimiento inmediato de contrase&#241;a para &#39;web_guest&#39;, revocar sesiones activas y verificar MFA.</div>
+      </div>
+      <div class="alert-item critica">
+        <div class="alert-title">[CRITICA] Posible Compromiso de Credenciales: Usuario &#39;maria.lopez&#39;</div>
+        <div class="alert-detail">La cuenta &#39;maria.lopez&#39; presenta 3 incidentes de severidad Alta/Cr&#237;tica afectando a: WKS-FINANZAS-04, SRV-ARCHIVOS-01, SRV-DB-CLIENTES.</div>
+        <div class="alert-rec">💡 Recomendación: Forzar restablecimiento inmediato de contrase&#241;a para &#39;maria.lopez&#39;, revocar sesiones activas y verificar MFA.</div>
+      </div>
+      <div class="alert-item critica">
+        <div class="alert-title">[CRITICA] 3 Incidente(s) Cr&#237;tico(s) Sin Contenci&#243;n Definitiva</div>
+        <div class="alert-detail">Los eventos [FW-106, SIEM-201, SIEM-203] tienen severidad CR&#205;TICA pero su estado actual no figura como Bloqueado ni Resuelto.</div>
+        <div class="alert-rec">💡 Recomendación: Aislar de la red los equipos afectados y escalar inmediatamente al equipo de Respuesta a Incidentes (CSIRT).</div>
+      </div>
+      <div class="alert-item alta">
+        <div class="alert-title">[ALTA] Alta Concentraci&#243;n de Eventos en Servidor &#39;SRV-LINUX-PROD&#39;</div>
+        <div class="alert-detail">El activo &#39;SRV-LINUX-PROD&#39; acumul&#243; 3 eventos de seguridad en el periodo analizado.</div>
+        <div class="alert-rec">💡 Recomendación: Revisar pol&#237;ticas de endurecimiento (hardening), parches de seguridad y reglas WAF/IDS asociadas a &#39;SRV-LINUX-PROD&#39;.</div>
+      </div>
+      <div class="alert-item alta">
+        <div class="alert-title">[ALTA] Alta Concentraci&#243;n de Eventos en Servidor &#39;SRV-WEB-PORTAL&#39;</div>
+        <div class="alert-detail">El activo &#39;SRV-WEB-PORTAL&#39; acumul&#243; 3 eventos de seguridad en el periodo analizado.</div>
+        <div class="alert-rec">💡 Recomendación: Revisar pol&#237;ticas de endurecimiento (hardening), parches de seguridad y reglas WAF/IDS asociadas a &#39;SRV-WEB-PORTAL&#39;.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="section" style="margin-bottom:0;">
+        <h2>📊 Distribución por Tipo de Evento</h2>
+        <div class="bar-row">
+          <div class="bar-header"><span>Login Fallido</span><strong>3 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Escaneo de Puertos</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Regla Firewall Modificada</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Intento SQL Injection</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Malware Detectado</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Escalaci&#243;n de Privilegios</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Exfiltraci&#243;n de Datos Sospechosa</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Certificado SSL por Expirar</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Cuenta Bloqueada</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Acceso No Autorizado</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Cambio de Permisos</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-header"><span>Intento RCE / WebShell</span><strong>1 evento(s)</strong></div>
+          <div class="bar-track"><div class="bar-fill" style="width:33%;"></div></div>
+        </div>
+      </div>
+      <div class="section" style="margin-bottom:0;">
+        <h2>🌐 Principales IPs de Origen y Activos Afectados</h2>
+        <table>
+          <thead><tr><th>IP Origen</th><th>Total Eventos</th><th>Críticos / Altos</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">185.220.101.45</td><td>4</td><td style="color:#fca5a5;font-weight:600;">3</td></tr>
+            <tr><td class="mono">10.0.20.44</td><td>3</td><td style="color:#fca5a5;font-weight:600;">3</td></tr>
+            <tr><td class="mono">45.155.205.99</td><td>2</td><td style="color:#fca5a5;font-weight:600;">2</td></tr>
+            <tr><td class="mono">203.0.113.88</td><td>1</td><td style="color:#fca5a5;font-weight:600;">1</td></tr>
+            <tr><td class="mono">10.0.10.15</td><td>1</td><td style="color:#fca5a5;font-weight:600;">0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="section">
+      <h2>📋 Registro Detallado y Organizado de Eventos de Seguridad</h2>
+      <div class="controls">
+        <input type="text" id="buscador" class="search-input" placeholder="🔍 Filtrar por IP, usuario, servidor, tipo o descripción..." onkeyup="filtrarTabla()" />
+        <div class="filter-btns">
+          <button class="filter-btn active" onclick="filtrarSeveridad('TODOS', this)">Todos</button>
+          <button class="filter-btn" onclick="filtrarSeveridad('Critica', this)">Crítica</button>
+          <button class="filter-btn" onclick="filtrarSeveridad('Alta', this)">Alta</button>
+          <button class="filter-btn" onclick="filtrarSeveridad('Media', this)">Media</button>
+          <button class="filter-btn" onclick="filtrarSeveridad('Baja', this)">Baja</button>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table id="tablaEventos">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Fecha y Hora</th>
+              <th>Severidad</th>
+              <th>Tipo de Evento</th>
+              <th>IP Origen</th>
+              <th>Usuario</th>
+              <th>Servidor / Activo</th>
+              <th>Estado</th>
+              <th>Descripción</th>
+              <th>Fuente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-severidad="Critica">
+              <td class="mono">LOG-004</td>
+              <td>2026-11-06 10:18:47</td>
+              <td><span class="badge Critica">Critica</span></td>
+              <td><strong>Intento RCE / WebShell</strong></td>
+              <td class="mono">45.155.205.99</td>
+              <td>web_guest</td>
+              <td class="mono">SRV-WEB-PORTAL</td>
+              <td>Bloqueado</td>
+              <td>WAF bloque&#243; intento de subida de archivo ejecutable .aspx en directorio p&#250;blico</td>
+              <td style="color:var(--muted);font-size:0.8rem;">03_auditoria_servidor.log</td>
+            </tr>
+            <tr data-severidad="Critica">
+              <td class="mono">SIEM-203</td>
+              <td>2026-11-06 08:08:47</td>
+              <td><span class="badge Critica">Critica</span></td>
+              <td><strong>Exfiltraci&#243;n de Datos Sospechosa</strong></td>
+              <td class="mono">10.0.20.44</td>
+              <td>maria.lopez</td>
+              <td class="mono">SRV-DB-CLIENTES</td>
+              <td>Alerta Activa</td>
+              <td>Transferencia saliente inusual de 4.8 GB hacia almacenamiento externo no autorizado</td>
+              <td style="color:var(--muted);font-size:0.8rem;">02_alertas_siem.json</td>
+            </tr>
+            <tr data-severidad="Critica">
+              <td class="mono">SIEM-201</td>
+              <td>2026-11-06 07:03:47</td>
+              <td><span class="badge Critica">Critica</span></td>
+              <td><strong>Malware Detectado</strong></td>
+              <td class="mono">10.0.20.44</td>
+              <td>maria.lopez</td>
+              <td class="mono">WKS-FINANZAS-04</td>
+              <td>En Investigaci&#243;n</td>
+              <td>Ejecuci&#243;n sospechosa de script PowerShell ofuscado (TrojanDownloader.Agent)</td>
+              <td style="color:var(--muted);font-size:0.8rem;">02_alertas_siem.json</td>
+            </tr>
+            <tr data-severidad="Critica">
+              <td class="mono">FW-106</td>
+              <td>2026-11-06 06:43:47</td>
+              <td><span class="badge Critica">Critica</span></td>
+              <td><strong>Intento SQL Injection</strong></td>
+              <td class="mono">45.155.205.99</td>
+              <td>web_guest</td>
+              <td class="mono">SRV-WEB-PORTAL</td>
+              <td>Alerta Activa</td>
+              <td>Payload SQLi detectado en par&#225;metro &#39;id_usuario&#39; del endpoint /api/login</td>
+              <td style="color:var(--muted);font-size:0.8rem;">01_eventos_firewall.csv</td>
+            </tr>
+            <tr data-severidad="Critica">
+              <td class="mono">FW-104</td>
+              <td>2026-11-06 06:07:47</td>
+              <td><span class="badge Critica">Critica</span></td>
+              <td><strong>Login Fallido</strong></td>
+              <td class="mono">185.220.101.45</td>
+              <td>admin</td>
+              <td class="mono">SRV-LINUX-PROD</td>
+              <td>Bloqueado</td>
+              <td>M&#250;ltiples intentos fallidos consecutivos por SSH desde IP externa</td>
+              <td style="color:var(--muted);font-size:0.8rem;">01_eventos_firewall.csv</td>
+            </tr>
+            <tr data-severidad="Alta">
+              <td class="mono">LOG-002</td>
+              <td>2026-11-06 09:23:47</td>
+              <td><span class="badge Alta">Alta</span></td>
+              <td><strong>Acceso No Autorizado</strong></td>
+              <td class="mono">203.0.113.88</td>
+              <td>backup_svc</td>
+              <td class="mono">SRV-BACKUP-01</td>
+              <td>Bloqueado</td>
+              <td>Intento de conexi&#243;n RDP desde ubicaci&#243;n geogr&#225;fica no permitida</td>
+              <td style="color:var(--muted);font-size:0.8rem;">03_auditoria_servidor.log</td>
+            </tr>
+            <tr data-severidad="Alta">
+              <td class="mono">SIEM-202</td>
+              <td>2026-11-06 07:38:47</td>
+              <td><span class="badge Alta">Alta</span></td>
+              <td><strong>Escalaci&#243;n de Privilegios</strong></td>
+              <td class="mono">10.0.20.44</td>
+              <td>maria.lopez</td>
+              <td class="mono">SRV-ARCHIVOS-01</td>
+              <td>Alerta Activa</td>
+              <td>Solicitud inusual de permisos de Administrador de Dominio fuera de horario habitual</td>
+              <td style="color:var(--muted);font-size:0.8rem;">02_alertas_siem.json</td>
+            </tr>
+            <tr data-severidad="Alta">
+              <td class="mono">FW-103</td>
+              <td>2026-11-06 06:06:47</td>
+              <td><span class="badge Alta">Alta</span></td>
+              <td><strong>Login Fallido</strong></td>
+              <td class="mono">185.220.101.45</td>
+              <td>root</td>
+              <td class="mono">SRV-LINUX-PROD</td>
+              <td>Bloqueado</td>
+              <td>Intento de fuerza bruta por SSH (intento 2/5)</td>
+              <td style="color:var(--muted);font-size:0.8rem;">01_eventos_firewall.csv</td>
+            </tr>
+            <tr data-severidad="Alta">
+              <td class="mono">FW-102</td>
+              <td>2026-11-06 06:05:47</td>
+              <td><span class="badge Alta">Alta</span></td>
+              <td><strong>Login Fallido</strong></td>
+              <td class="mono">185.220.101.45</td>
+              <td>root</td>
+              <td class="mono">SRV-LINUX-PROD</td>
+              <td>Bloqueado</td>
+              <td>Intento de fuerza bruta por SSH (intento 1/5)</td>
+              <td style="color:var(--muted);font-size:0.8rem;">01_eventos_firewall.csv</td>
+            </tr>
+            <tr data-severidad="Media">
+              <td class="mono">LOG-001</td>
+              <td>2026-11-06 08:58:47</td>
+              <td><span class="badge Media">Media</span></td>
+              <td><strong>Cuenta Bloqueada</strong></td>
+              <td class="mono">192.168.50.12</td>
+              <td>jorge.ruiz</td>
+              <td class="mono">SRV-AD-01</td>
+              <td>Bloqueado</td>
+              <td>Cuenta bloqueada temporalmente tras 3 contrase&#241;as err&#243;neas</td>
+              <td style="color:var(--muted);font-size:0.8rem;">03_auditoria_servidor.log</td>
+            </tr>
+            <tr data-severidad="Media">
+              <td class="mono">FW-101</td>
+              <td>2026-11-06 05:58:47</td>
+              <td><span class="badge Media">Media</span></td>
+              <td><strong>Escaneo de Puertos</strong></td>
+              <td class="mono">185.220.101.45</td>
+              <td>anonimo</td>
+              <td class="mono">SRV-GATEWAY-01</td>
+              <td>Bloqueado</td>
+              <td>Escaneo SYN detectado en puertos 22, 80, 443 y 3389</td>
+              <td style="color:var(--muted);font-size:0.8rem;">01_eventos_firewall.csv</td>
+            </tr>
+            <tr data-severidad="Baja">
+              <td class="mono">LOG-003</td>
+              <td>2026-11-06 09:53:47</td>
+              <td><span class="badge Baja">Baja</span></td>
+              <td><strong>Cambio de Permisos</strong></td>
+              <td class="mono">10.0.10.22</td>
+              <td>ana.torres</td>
+              <td class="mono">SRV-AD-01</td>
+              <td>Resuelto</td>
+              <td>Asignaci&#243;n de rol lectura en carpeta de auditor&#237;a trimestral</td>
+              <td style="color:var(--muted);font-size:0.8rem;">03_auditoria_servidor.log</td>
+            </tr>
+            <tr data-severidad="Baja">
+              <td class="mono">SIEM-204</td>
+              <td>2026-11-06 08:33:47</td>
+              <td><span class="badge Baja">Baja</span></td>
+              <td><strong>Certificado SSL por Expirar</strong></td>
+              <td class="mono">10.0.5.10</td>
+              <td>sistema</td>
+              <td class="mono">SRV-WEB-PORTAL</td>
+              <td>En Investigaci&#243;n</td>
+              <td>El certificado TLS del dominio principal expira en 14 d&#237;as</td>
+              <td style="color:var(--muted);font-size:0.8rem;">02_alertas_siem.json</td>
+            </tr>
+            <tr data-severidad="Baja">
+              <td class="mono">FW-105</td>
+              <td>2026-11-06 06:28:47</td>
+              <td><span class="badge Baja">Baja</span></td>
+              <td><strong>Regla Firewall Modificada</strong></td>
+              <td class="mono">10.0.10.15</td>
+              <td>carlos.mendez</td>
+              <td class="mono">FW-PERIMETRAL</td>
+              <td>Resuelto</td>
+              <td>Actualizaci&#243;n programada de lista blanca de oficina central</td>
+              <td style="color:var(--muted);font-size:0.8rem;">01_eventos_firewall.csv</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer>Generador Automatizado de Reportes de Seguridad en C# (.NET)</footer>
+  </div>
+  <script>
+    let severidadActual = 'TODOS';
+    function filtrarSeveridad(sev, btn) {
+      severidadActual = sev;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filtrarTabla();
+    }
+    function filtrarTabla() {
+      const texto = document.getElementById('buscador').value.toLowerCase();
+      const filas = document.querySelectorAll('#tablaEventos tbody tr');
+      filas.forEach(fila => {
+        const sevFila = fila.getAttribute('data-severidad');
+        const coincideSev = (severidadActual === 'TODOS' || sevFila === severidadActual);
+        const coincideTexto = fila.innerText.toLowerCase().includes(texto);
+        fila.style.display = (coincideSev && coincideTexto) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

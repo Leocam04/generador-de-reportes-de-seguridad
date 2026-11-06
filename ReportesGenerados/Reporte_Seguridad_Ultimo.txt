@@ -1,0 +1,111 @@
+﻿===============================================================================================
+                REPORTE EJECUTIVO AUTOMATIZADO DE SEGURIDAD INFORMÁTICA
+===============================================================================================
+Fecha de Generación      : 06/11/2026 11:53:47
+Archivos Procesados      : 3
+Total de Eventos         : 14
+Periodo Analizado        : 06/11/2026 05:58:47 -> 06/11/2026 10:18:47
+Índice de Riesgo Global  : 100/100 (CRÍTICO - Acción Inmediata Requerida)
+-----------------------------------------------------------------------------------------------
+1. RESUMEN POR NIVEL DE SEVERIDAD
+-----------------------------------------------------------------------------------------------
+  * CRÍTICA :    5 evento(s)
+  * ALTA    :    4 evento(s)
+  * MEDIA   :    2 evento(s)
+  * BAJA    :    3 evento(s)
+-----------------------------------------------------------------------------------------------
+2. ALERTAS DE CORRELACIÓN Y RECOMENDACIONES AUTOMÁTICAS
+-----------------------------------------------------------------------------------------------
+  [1] [CRITICA] Actividad Hostil Repetitiva desde IP 185.220.101.45
+      Detalle       : Se registraron 4 eventos desde la IP 185.220.101.45 (Tipos: Escaneo de Puertos, Login Fallido). Posible ataque de fuerza bruta o reconocimiento activo.
+      Recomendación : Bloquear permanentemente la IP 185.220.101.45 en el Firewall perimetral y auditar accesos previos desde este origen.
+
+  [2] [CRITICA] Actividad Hostil Repetitiva desde IP 10.0.20.44
+      Detalle       : Se registraron 3 eventos desde la IP 10.0.20.44 (Tipos: Malware Detectado, Escalación de Privilegios, Exfiltración de Datos Sospechosa). Posible ataque de fuerza bruta o reconocimiento activo.
+      Recomendación : Bloquear permanentemente la IP 10.0.20.44 en el Firewall perimetral y auditar accesos previos desde este origen.
+
+  [3] [CRITICA] Posible Compromiso de Credenciales: Usuario 'root'
+      Detalle       : La cuenta 'root' presenta 2 incidentes de severidad Alta/Crítica afectando a: SRV-LINUX-PROD.
+      Recomendación : Forzar restablecimiento inmediato de contraseña para 'root', revocar sesiones activas y verificar MFA.
+
+  [4] [CRITICA] Posible Compromiso de Credenciales: Usuario 'web_guest'
+      Detalle       : La cuenta 'web_guest' presenta 2 incidentes de severidad Alta/Crítica afectando a: SRV-WEB-PORTAL.
+      Recomendación : Forzar restablecimiento inmediato de contraseña para 'web_guest', revocar sesiones activas y verificar MFA.
+
+  [5] [CRITICA] Posible Compromiso de Credenciales: Usuario 'maria.lopez'
+      Detalle       : La cuenta 'maria.lopez' presenta 3 incidentes de severidad Alta/Crítica afectando a: WKS-FINANZAS-04, SRV-ARCHIVOS-01, SRV-DB-CLIENTES.
+      Recomendación : Forzar restablecimiento inmediato de contraseña para 'maria.lopez', revocar sesiones activas y verificar MFA.
+
+  [6] [CRITICA] 3 Incidente(s) Crítico(s) Sin Contención Definitiva
+      Detalle       : Los eventos [FW-106, SIEM-201, SIEM-203] tienen severidad CRÍTICA pero su estado actual no figura como Bloqueado ni Resuelto.
+      Recomendación : Aislar de la red los equipos afectados y escalar inmediatamente al equipo de Respuesta a Incidentes (CSIRT).
+
+  [7] [ALTA] Alta Concentración de Eventos en Servidor 'SRV-LINUX-PROD'
+      Detalle       : El activo 'SRV-LINUX-PROD' acumuló 3 eventos de seguridad en el periodo analizado.
+      Recomendación : Revisar políticas de endurecimiento (hardening), parches de seguridad y reglas WAF/IDS asociadas a 'SRV-LINUX-PROD'.
+
+  [8] [ALTA] Alta Concentración de Eventos en Servidor 'SRV-WEB-PORTAL'
+      Detalle       : El activo 'SRV-WEB-PORTAL' acumuló 3 eventos de seguridad en el periodo analizado.
+      Recomendación : Revisar políticas de endurecimiento (hardening), parches de seguridad y reglas WAF/IDS asociadas a 'SRV-WEB-PORTAL'.
+
+-----------------------------------------------------------------------------------------------
+3. ESTADÍSTICAS POR TIPO DE EVENTO Y ORIGEN
+-----------------------------------------------------------------------------------------------
+  Eventos por Categoría:
+    - Login Fallido                       : 3 evento(s)
+    - Escaneo de Puertos                  : 1 evento(s)
+    - Regla Firewall Modificada           : 1 evento(s)
+    - Intento SQL Injection               : 1 evento(s)
+    - Malware Detectado                   : 1 evento(s)
+    - Escalación de Privilegios           : 1 evento(s)
+    - Exfiltración de Datos Sospechosa    : 1 evento(s)
+    - Certificado SSL por Expirar         : 1 evento(s)
+    - Cuenta Bloqueada                    : 1 evento(s)
+    - Acceso No Autorizado                : 1 evento(s)
+    - Cambio de Permisos                  : 1 evento(s)
+    - Intento RCE / WebShell              : 1 evento(s)
+
+  Top Direcciones IP de Origen:
+    - 185.220.101.45       : 4 evento(s) (3 Críticos/Altos)
+    - 10.0.20.44           : 3 evento(s) (3 Críticos/Altos)
+    - 45.155.205.99        : 2 evento(s) (2 Críticos/Altos)
+    - 203.0.113.88         : 1 evento(s) (1 Críticos/Altos)
+    - 10.0.10.15           : 1 evento(s) (0 Críticos/Altos)
+    - 10.0.5.10            : 1 evento(s) (0 Críticos/Altos)
+    - 192.168.50.12        : 1 evento(s) (0 Críticos/Altos)
+    - 10.0.10.22           : 1 evento(s) (0 Críticos/Altos)
+-----------------------------------------------------------------------------------------------
+4. DETALLE ORGANIZADO DE EVENTOS (ORDENADO POR PRIORIDAD Y FECHA)
+-----------------------------------------------------------------------------------------------
+ID           | FECHA Y HORA        | SEVERIDAD | IP ORIGEN       | USUARIO        | SERVIDOR         | TIPO DE EVENTO
+-----------------------------------------------------------------------------------------------
+LOG-004      | 2026-11-06 10:18:47 | Critica   | 45.155.205.99   | web_guest      | SRV-WEB-PORTAL   | Intento RCE / WebShell
+   -> Estado: [Bloqueado] | Fuente: 03_auditoria_servidor.log | Detalle: WAF bloqueó intento de subida de archivo ejecutable .aspx en directorio público
+SIEM-203     | 2026-11-06 08:08:47 | Critica   | 10.0.20.44      | maria.lopez    | SRV-DB-CLIENTES  | Exfiltración de Datos Sospechosa
+   -> Estado: [Alerta Activa] | Fuente: 02_alertas_siem.json | Detalle: Transferencia saliente inusual de 4.8 GB hacia almacenamiento externo no autorizado
+SIEM-201     | 2026-11-06 07:03:47 | Critica   | 10.0.20.44      | maria.lopez    | WKS-FINANZAS-04  | Malware Detectado
+   -> Estado: [En Investigación] | Fuente: 02_alertas_siem.json | Detalle: Ejecución sospechosa de script PowerShell ofuscado (TrojanDownloader.Agent)
+FW-106       | 2026-11-06 06:43:47 | Critica   | 45.155.205.99   | web_guest      | SRV-WEB-PORTAL   | Intento SQL Injection
+   -> Estado: [Alerta Activa] | Fuente: 01_eventos_firewall.csv | Detalle: Payload SQLi detectado en parámetro 'id_usuario' del endpoint /api/login
+FW-104       | 2026-11-06 06:07:47 | Critica   | 185.220.101.45  | admin          | SRV-LINUX-PROD   | Login Fallido
+   -> Estado: [Bloqueado] | Fuente: 01_eventos_firewall.csv | Detalle: Múltiples intentos fallidos consecutivos por SSH desde IP externa
+LOG-002      | 2026-11-06 09:23:47 | Alta      | 203.0.113.88    | backup_svc     | SRV-BACKUP-01    | Acceso No Autorizado
+   -> Estado: [Bloqueado] | Fuente: 03_auditoria_servidor.log | Detalle: Intento de conexión RDP desde ubicación geográfica no permitida
+SIEM-202     | 2026-11-06 07:38:47 | Alta      | 10.0.20.44      | maria.lopez    | SRV-ARCHIVOS-01  | Escalación de Privilegios
+   -> Estado: [Alerta Activa] | Fuente: 02_alertas_siem.json | Detalle: Solicitud inusual de permisos de Administrador de Dominio fuera de horario habitual
+FW-103       | 2026-11-06 06:06:47 | Alta      | 185.220.101.45  | root           | SRV-LINUX-PROD   | Login Fallido
+   -> Estado: [Bloqueado] | Fuente: 01_eventos_firewall.csv | Detalle: Intento de fuerza bruta por SSH (intento 2/5)
+FW-102       | 2026-11-06 06:05:47 | Alta      | 185.220.101.45  | root           | SRV-LINUX-PROD   | Login Fallido
+   -> Estado: [Bloqueado] | Fuente: 01_eventos_firewall.csv | Detalle: Intento de fuerza bruta por SSH (intento 1/5)
+LOG-001      | 2026-11-06 08:58:47 | Media     | 192.168.50.12   | jorge.ruiz     | SRV-AD-01        | Cuenta Bloqueada
+   -> Estado: [Bloqueado] | Fuente: 03_auditoria_servidor.log | Detalle: Cuenta bloqueada temporalmente tras 3 contraseñas erróneas
+FW-101       | 2026-11-06 05:58:47 | Media     | 185.220.101.45  | anonimo        | SRV-GATEWAY-01   | Escaneo de Puertos
+   -> Estado: [Bloqueado] | Fuente: 01_eventos_firewall.csv | Detalle: Escaneo SYN detectado en puertos 22, 80, 443 y 3389
+LOG-003      | 2026-11-06 09:53:47 | Baja      | 10.0.10.22      | ana.torres     | SRV-AD-01        | Cambio de Permisos
+   -> Estado: [Resuelto] | Fuente: 03_auditoria_servidor.log | Detalle: Asignación de rol lectura en carpeta de auditoría trimestral
+SIEM-204     | 2026-11-06 08:33:47 | Baja      | 10.0.5.10       | sistema        | SRV-WEB-PORTAL   | Certificado SSL por Expirar
+   -> Estado: [En Investigación] | Fuente: 02_alertas_siem.json | Detalle: El certificado TLS del dominio principal expira en 14 días
+FW-105       | 2026-11-06 06:28:47 | Baja      | 10.0.10.15      | carlos.mendez  | FW-PERIMETRAL    | Regla Firewall Modificada
+   -> Estado: [Resuelto] | Fuente: 01_eventos_firewall.csv | Detalle: Actualización programada de lista blanca de oficina central
+===============================================================================================
+Fin del Reporte Automatizado.

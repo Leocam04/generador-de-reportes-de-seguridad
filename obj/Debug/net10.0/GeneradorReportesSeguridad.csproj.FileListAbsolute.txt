@@ -1,0 +1,14 @@
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\bin\Debug\net10.0\GeneradorReportesSeguridad.exe
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\bin\Debug\net10.0\GeneradorReportesSeguridad.deps.json
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\bin\Debug\net10.0\GeneradorReportesSeguridad.runtimeconfig.json
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\bin\Debug\net10.0\GeneradorReportesSeguridad.dll
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\bin\Debug\net10.0\GeneradorReportesSeguridad.pdb
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\GeneradorReportesSeguridad.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\GeneradorReportesSeguridad.AssemblyInfoInputs.cache
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\GeneradorReportesSeguridad.AssemblyInfo.cs
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\GeneradorReportesSeguridad.csproj.CoreCompileInputs.cache
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\GeneradorReportesSeguridad.dll
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\refint\GeneradorReportesSeguridad.dll
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\GeneradorReportesSeguridad.pdb
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\GeneradorReportesSeguridad.genruntimeconfig.cache
+C:\Users\CRAZY\Desktop\proyecto\generador de reportes de seguridad\obj\Debug\net10.0\ref\GeneradorReportesSeguridad.dll

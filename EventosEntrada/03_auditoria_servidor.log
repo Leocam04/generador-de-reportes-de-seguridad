@@ -1,0 +1,5 @@
+﻿# Bitácora de Auditoría de Seguridad - Formato: [Fecha] [Severidad] [IP] [Usuario] [Servidor] [Tipo] [Estado] Descripción
+[2026-11-06 08:58:47] [MEDIA] [192.168.50.12] [jorge.ruiz] [SRV-AD-01] [Cuenta Bloqueada] [Bloqueado] Cuenta bloqueada temporalmente tras 3 contraseñas erróneas
+[2026-11-06 09:23:47] [ALTA] [203.0.113.88] [backup_svc] [SRV-BACKUP-01] [Acceso No Autorizado] [Bloqueado] Intento de conexión RDP desde ubicación geográfica no permitida
+[2026-11-06 09:53:47] [BAJA] [10.0.10.22] [ana.torres] [SRV-AD-01] [Cambio de Permisos] [Resuelto] Asignación de rol lectura en carpeta de auditoría trimestral
+[2026-11-06 10:18:47] [CRITICA] [45.155.205.99] [web_guest] [SRV-WEB-PORTAL] [Intento RCE / WebShell] [Bloqueado] WAF bloqueó intento de subida de archivo ejecutable .aspx en directorio público

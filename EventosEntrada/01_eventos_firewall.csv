@@ -1,0 +1,7 @@
+﻿Id,FechaHora,TipoEvento,Severidad,OrigenIp,Usuario,Servidor,Estado,Descripcion
+FW-101,2026-11-06 05:58:47,Escaneo de Puertos,Media,185.220.101.45,anonimo,SRV-GATEWAY-01,Bloqueado,"Escaneo SYN detectado en puertos 22, 80, 443 y 3389"
+FW-102,2026-11-06 06:05:47,Login Fallido,Alta,185.220.101.45,root,SRV-LINUX-PROD,Bloqueado,"Intento de fuerza bruta por SSH (intento 1/5)"
+FW-103,2026-11-06 06:06:47,Login Fallido,Alta,185.220.101.45,root,SRV-LINUX-PROD,Bloqueado,"Intento de fuerza bruta por SSH (intento 2/5)"
+FW-104,2026-11-06 06:07:47,Login Fallido,Critica,185.220.101.45,admin,SRV-LINUX-PROD,Bloqueado,"Múltiples intentos fallidos consecutivos por SSH desde IP externa"
+FW-105,2026-11-06 06:28:47, Regla Firewall Modificada,Baja,10.0.10.15,carlos.mendez,FW-PERIMETRAL,Resuelto,"Actualización programada de lista blanca de oficina central"
+FW-106,2026-11-06 06:43:47,Intento SQL Injection,Critica,45.155.205.99,web_guest,SRV-WEB-PORTAL,Alerta Activa,"Payload SQLi detectado en parámetro 'id_usuario' del endpoint /api/login"
